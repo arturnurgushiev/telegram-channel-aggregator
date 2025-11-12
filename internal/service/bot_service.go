@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"telegram-channel-aggregator/internal/repository"
 	"time"
 
@@ -166,7 +167,8 @@ func (telegram *TelegramManager) checkAndSend(channel string) {
 			if posts[i] == "" {
 				continue
 			}
-			msg := tgbotapi.NewMessage(userID, posts[i])
+			messageToUser := fmt.Sprintf("Новое сообщение из @%s\n\n%s", channel, posts[i])
+			msg := tgbotapi.NewMessage(userID, messageToUser)
 			bot.Send(msg)
 		}
 	}
